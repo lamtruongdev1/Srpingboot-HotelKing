@@ -1,5 +1,4 @@
-# Tạo nội dung file README.md
-readme_content = """
+
 # HotelKing Spring Boot Project
 
 **HotelKing** là một ứng dụng quản lý khách sạn được xây dựng bằng Spring Boot. Nó giúp các quản trị viên khách sạn có thể dễ dàng quản lý thông tin phòng, khách hàng và các dịch vụ trong khách sạn. Ứng dụng này cung cấp giao diện người dùng thân thiện, dễ sử dụng và hỗ trợ các tính năng cần thiết cho việc quản lý hoạt động của khách sạn.
