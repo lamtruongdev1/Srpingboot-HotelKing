@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Sona Template">
+    <meta name="keywords" content="Sona, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Đăng ký | HotelKing</title>
+    <div th:insert="~{components/taglib :: taglib}"></div>
+    <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body>
+
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-4">Đăng Ký</h4>
+                <p class="text-start">Trở thành khách hàng của HotelKing</p>
+                <form id="registrationForm">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Tên</label>
+                        <input type="text" id="name" class="form-control" placeholder="Nhập tên của bạn" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" id="email" class="form-control" placeholder="Nhập email của bạn" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Mật Khẩu</label>
+                        <div class="input-group">
+                            <input type="password" id="password" class="form-control" placeholder="Nhập mật khẩu"
+                                   required>
+                            <span class="input-group-text" id="togglePassword"><i class="ti ti-eye"
+                                                                                  style="color: grey"></i></span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Xác Nhận Mật Khẩu</label>
+                        <div class="input-group">
+                            <input type="password" id="confirmPassword" class="form-control"
+                                   placeholder="Xác nhận mật khẩu" required>
+                            <span class="input-group-text" id="toggleConfirmPassword"><i class="ti ti-eye"
+                                                                                         style="color: grey"></i></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Đăng Ký</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="spinner"
+     class="d-none position-fixed top-50 start-50 translate-middle ">
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+<div class="modal fade" id="successModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="successModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Đăng ký thành công!</h5>
+            </div>
+            <div class="modal-body">
+                Vui lòng kiểm tra email của bạn để xác nhận tài khoản.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="redirectHome">Quay về trang chủ</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/auth/auth.js"></script>
+<script>
+    togglePassword('togglePassword', 'password');
+    togglePassword('toggleConfirmPassword', 'confirmPassword');
+</script>
+</body>
+</html>

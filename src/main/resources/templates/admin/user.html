@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Sona Template">
+    <meta name="keywords" content="Sona, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Quản trị | HotelKing</title>
+    <div th:insert="~{components/taglib :: taglib}"></div>
+    <link rel="stylesheet" href="/css/admin/style.css">
+</head>
+<body>
+<div th:insert="~{admin/components/header :: header}"></div>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 sidebar" id="sidebar">
+            <div th:insert="~{admin/components/sidebar :: sidebar}"></div>
+        </div>
+
+        <div class="col-md-9 content">
+            <div class="mt-5 mb-4">
+                <div class="d-flex align-items-center mb-4">
+                    <button type="button" class="btn btn-dark rounded-0 btn-sm me-2" data-bs-toggle="modal"
+                            data-bs-target="#createModal">
+                        Thêm người dùng
+                    </button>
+                    <form th:action="@{/admin/user/search}"
+                          class="form-inline d-flex align-items-center my-2 my-lg-0 flex-grow-1" method="get">
+                        <input name="keyword" class="form-control form-control-sm mr-sm-2 flex-grow-1 me-2"
+                               type="search" placeholder="Nhập vào tên người dùng để tìm!" aria-label="Search">
+                        <button class="btn btn-dark rounded-0 btn-sm my-2 my-sm-0" type="submit">
+                            <i class="ti ti-search"></i>
+                        </button>
+                    </form>
+                </div>
+                <p class="text-center text-success message" th:text="${message}"></p>
+                <h5>Quản lý người dùng</h5>
+                <div class="row ">
+                    <table th:if="${users != null}" class="table">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Tên</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">SĐT</th>
+                            <th scope="col">Địa chỉ</th>
+                            <th scope="col">Giới tính</th>
+                            <th scope="col">Ngày sinh</th>
+                            <th scope="col">Role</th>
+                            <th scope="col">Trạng thái</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="user, iterStat : ${users}">
+                            <td th:text="${user.id}"></td>
+                            <td th:text="${user.fullname} ? ${user.fullname} : 'chưa cập nhật'"></td>
+                            <td th:text="${user.email}"></td>
+                            <td th:text="${user.phone}"></td>
+                            <td th:text="${user.address}"></td>
+                            <td th:text="${user.gender} ? 'Nam' : 'Nữ'"></td>
+                            <td th:text="${user.dayOfBirth}"></td>
+                            <td th:text="${user.role}"></td>
+                            <td th:text="${user.enabled} ? 'Active' : 'Inactive'"></td>
+                            <td>
+                                <!-- Modal update -->
+                                <a class="btn btn-primary btn-sm"
+                                   data-bs-toggle="modal" th:data-bs-target="'#updateModal' + ${iterStat.index}">
+                                    <i class="ti ti-edit"> </i>
+                                </a>
+                                <div class="modal fade" th:id="'updateModal' + ${iterStat.index}" tabindex="-1"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content modal-lg">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5"
+                                                    th:text="'Cập nhật ' + ${user.fullname}"></h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form th:action="@{/admin/user/save}" method="post">
+                                                    <div class="mb-3" style="display: none;">
+                                                        <input name="id" th:value="${user.id}" type="text"
+                                                               class="form-control">
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="mb-3">
+                                                                <label for="fullnameUpdate"
+                                                                       class="form-label">Tên</label>
+                                                                <input name="fullname" th:value="${user.fullname}"
+                                                                       type="text" class="form-control"
+                                                                       id="fullnameUpdate">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="mb-3">
+                                                                <label for="dobUpdate" class="form-label">Ngày
+                                                                    sinh</label>
+                                                                <input name="dayOfBirth" th:value="${user.dayOfBirth}"
+                                                                       type="date" class="form-control" id="dobUpdate">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Giới tính:</label>
+                                                        <div class="d-flex">
+                                                            <div class="form-check">
+                                                                <input type="radio" id="male" name="gender"
+                                                                       class="form-check-input"
+                                                                       th:checked="${user.gender == 'Nam'}"
+                                                                       value="Nam">
+                                                                <label for="male" class="form-check-label">Nam</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input type="radio" id="female" name="gender"
+                                                                       class="form-check-input"
+                                                                       th:checked="${user.gender == 'Nữ'}"
+                                                                       value="Nữ">
+                                                                <label for="female" class="form-check-label">Nữ</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="emailUpdate" class="form-label">Email</label>
+                                                        <input name="email" th:value="${user.email}"
+                                                               type="email" class="form-control" id="emailUpdate">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="phoneUpdate" class="form-label">SĐT</label>
+                                                        <input name="phone" th:value="${user.phone}"
+                                                               type="text" class="form-control" id="phoneUpdate">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="addressUpdate" class="form-label">Địa chỉ</label>
+                                                        <input name="address" th:value="${user.address}"
+                                                               type="text" class="form-control" id="addressUpdate">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="roleUpdate" class="form-label">Role</label>
+                                                        <select id="roleUpdate" name="role" class="form-control">
+                                                            <option th:selected="${user.role == 'ADMIN'}"
+                                                                    value="ADMIN">Admin
+                                                            </option>
+                                                            <option th:selected="${user.role == 'USER'}"
+                                                                    value="USER">User
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="enabledUpdate" class="form-label">Active</label>
+                                                        <input type="checkbox" id="enabledUpdate" name="enabled"
+                                                               class="form-check-input"
+                                                               th:checked="${user.enabled}">
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary w-100">Cập nhật
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Modal delete -->
+                                <!-- Uncomment and update if delete functionality is needed -->
+                                <!--
+                                <a class="btn btn-danger btn-sm"
+                                   data-bs-toggle="modal"
+                                   th:data-bs-target="'#confirmDeleteModal' + ${iterStat.index}">
+                                    <i class="ti ti-trash"></i>
+                                </a>
+                                <div class="modal fade" th:id="'confirmDeleteModal' + ${iterStat.index}"
+                                     tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Bạn có chắc chắn muốn xóa người dùng này không?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <form th:action="@{/admin/user/delete}" method="post">
+                                                    <input name="id" th:value="${user.id}" type="hidden">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Hủy
+                                                    </button>
+                                                    <button type="submit" class="btn btn-danger">Xóa</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                -->
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Modal create -->
+                <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content modal-lg">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="createModalLabel">Thêm người dùng mới</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form th:action="@{/admin/user/save}" method="post">
+                                    <div class="mb-3">
+                                        <label for="fullname" class="form-label">Tên</label>
+                                        <input name="fullname" type="text" class="form-control" id="fullname">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="dayOfBirth" class="form-label">Ngày sinh</label>
+                                        <input name="dayOfBirth" type="date" class="form-control" id="dayOfBirth">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Giới tính:</label>
+                                        <div class="d-flex">
+                                            <div class="form-check">
+                                                <input type="radio" id="male" name="gender" class="form-check-input"
+                                                       value="Nam">
+                                                <label for="male" class="form-check-label">Nam</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="radio" id="female" name="gender" class="form-check-input"
+                                                       value="Nữ">
+                                                <label for="female" class="form-check-label">Nữ</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input name="email" type="email" class="form-control" id="email">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="phone" class="form-label">SĐT</label>
+                                        <input name="phone" type="text" class="form-control" id="phone">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="address" class="form-label">Địa chỉ</label>
+                                        <input name="address" type="text" class="form-control" id="address">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="role" class="form-label">Role</label>
+                                        <select id="role" name="role" class="form-control">
+                                            <option value="ADMIN">Admin</option>
+                                            <option value="USER">User</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="enabled" class="form-label">Active</label>
+                                        <input type="checkbox" id="enabled" name="enabled" class="form-check-input">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100">Thêm người dùng</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

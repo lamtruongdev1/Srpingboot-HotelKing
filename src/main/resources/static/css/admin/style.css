@@ -1,0 +1,121 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-family: "Cabin", sans-serif;;
+}
+
+.header {
+    background-color: #dea973;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 101;
+    box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+.header .navbar-brand {
+    color: #fff;
+}
+
+.header .navbar-nav .nav-link {
+    color: #fff;
+}
+
+.header .navbar-nav .nav-link:hover {
+    color: #adb5bd;
+}
+
+.sidebar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 250px;
+    padding: 10px;
+    border-right: 1px solid #ccc;
+    height: calc(100vh - 60px);
+    background-color: #fff;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.sidebar > .nav-item a {
+    color: black;
+}
+
+.content {
+    margin-left: 250px; /* Offset by sidebar width */
+    padding: 1rem;
+    overflow-x: hidden; /* Prevent horizontal overflow */
+    box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        top: 0; /* Reset position */
+        transform: translateX(0); /* Ensure it's fully visible */
+    }
+
+    .content {
+        margin-left: 0; /* Remove sidebar margin on small screens */
+    }
+}
+
+/* pill button */
+.switch {
+    font-size: 13px;
+    position: relative;
+    display: inline-block;
+    width: 3.6em;
+    height: 1.8em;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    margin-bottom: 3px;
+    inset: 0;
+    width: 3.2em;
+    background: #ccc;
+    border-radius: 50px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 1.6em;
+    width: 1.6em;
+    inset: 0;
+    background-color: white;
+    border-radius: 50px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.switch input:checked + .slider {
+    background: #29845a;
+}
+
+.switch input:focus + .slider {
+    box-shadow: 0 0 1px #0974f1;
+}
+
+.switch input:checked + .slider:before {
+    transform: translateX(1.6em);
+}

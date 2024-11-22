@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Sona Template">
+    <meta name="keywords" content="Sona, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Đăng nhập | HotelKing</title>
+    <link rel="stylesheet" href="/css/auth.css">
+    <div th:insert="~{components/taglib :: taglib}"></div>
+</head>
+<body>
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-md" style="width: 100%; max-width: 500px;">
+        <div class="card-body">
+            <h3 class="card-title text-center">Đăng nhập</h3>
+            <p class="text-center">Tiếp tục với HotelKing</p>
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Nhập email của bạn" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Mật khẩu</label>
+                    <div class="input-group mb-3">
+                        <input type="password" id="password" class="form-control" placeholder="Mật Khẩu">
+                        <span class="input-group-text" id="togglePassword">
+                <i class="ti ti-eye" style="color: grey"></i>
+                </span>
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
+                    </div>
+                    <div id="error-message" class="alert alert-danger d-none" role="alert">
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<script src="/auth/auth.js"></script>
+<script>
+    togglePassword('togglePassword', 'password');
+</script>
+</html>

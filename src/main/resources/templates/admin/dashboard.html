@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tổng quan | HotelKing</title>
+    <link rel="stylesheet" href="/css/admin/style.css">
+    <div th:insert="~{components/taglib :: taglib}"></div>
+</head>
+<body>
+<header th:replace="~{admin/components/header :: header}"></header>
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div th:insert="~{admin/components/sidebar :: sidebar}"></div>
+        </nav>
+        <main role="main" class="col-md-10 ml-sm-auto px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Tổng quan</h1>
+            </div>
+            <div class="row">
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="my-0 fw-normal">Người dùng</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">[[${totalUsers}]] người dùng</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-3 col-lg-3">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="my-0 fw-normal">Phòng đang hoạt động</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> [[${totalRooms}]] phòng | Tỉ lệ [[${activeRoomPercentage}]]%</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-3 col-lg-3">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="my-0 fw-normal">Tổng đơn hàng</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> [[${totalOrders}]] đơn hàng</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-3 col-lg-3">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="my-0 fw-normal">Doanh thu tháng này</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">[[${currentMonthRevenue}]] VNĐ</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-container mt-5">
+                <h6>Biểu đồ doanh thu năm</h6>
+                <div class="d-flex justify-content-center align-items-center mt-5">
+                    <canvas id="chart" style="width:100%;max-width:700px"></canvas>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script>
+    const currentYear = new Date().getFullYear();
+    const xValues = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    let yValues = [];
+
+    const myChart = new Chart("chart", {
+        type: "line",
+        data: {
+            labels: xValues,
+            datasets: [{
+                label: `Revenue for ${currentYear}`,
+                data: yValues,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                }
+            },
+            scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Month'
+                    }
+                },
+                y: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Revenue'
+                    }
+                }
+            }
+        }
+    });
+
+    function updateChartWithData(year) {
+        $.ajax({
+            url: `http://127.0.0.1:8080/api/revenue-per-month-of-year?year=${year}`,
+            type: 'GET',
+            success: function (response) {
+                yValues = response.map(item => item.revenue);
+                myChart.data.datasets[0].data = yValues;
+                myChart.update();
+            },
+            error: function (xhr, status, error) {
+                console.error('Error fetching data:', error);
+            }
+        });
+    }
+
+    updateChartWithData(currentYear);
+
+    function fetchStatisticData(year) {
+        $.ajax({
+            url: `http://127.0.0.1:8080/api/stats?year=${year}`,
+            type: 'GET',
+            success: function (response) {
+                $('#total-order').text(response.total_orders);
+                $('#total-user').text(response.total_users);
+                $('#total-product').text(response.total_products);
+                $('#avg-month-revenue').text(response.average_monthly_revenue);
+            },
+            error: function (xhr, status, error) {
+                console.error('Error fetching data:', error);
+            }
+        });
+    }
+
+    fetchStatisticData(currentYear);
+</script>
+</body>
+</html>

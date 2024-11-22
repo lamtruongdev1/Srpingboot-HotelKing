@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HotelKing</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div th:fragment="header">
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+    <div class="offcanvas-menu-overlay"></div>
+    <div class="canvas-open">
+        <i class="icon_menu"></i>
+    </div>
+    <div class="offcanvas-menu-wrapper">
+        <div class="canvas-close">
+            <i class="icon_close"></i>
+        </div>
+        <div class="search-icon search-switch">
+            <i class="icon_search"></i>
+        </div>
+        <div class="header-configure-area">
+            <div class="language-option">
+                <!-- Khi người dùng chưa đăng nhập -->
+                <div class="user-not-login">
+                    <i class="fa fa-user"></i>
+                    <span class="customer-name"><i class="fa fa-angle-down"></i></span>
+                    <div class="flag-dropdown">
+                        <ul>
+                            <li class="mb-3"><a href="/login-form">Đăng nhập</a></li>
+                            <li><a href="/signup-form">Đăng ký</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Khi người dùng đã đăng nhập -->
+                <div class="user-login d-none">
+                    <i class="fa fa-user"></i>
+                    <span class="customer-name"><span class="user-name"></span> <i
+                            class="fa fa-angle-down"></i></span>
+                    <div class="flag-dropdown">
+                        <ul>
+                            <li class="mb-3"><a href="/profile">Trang cá nhân</a></li>
+                            <li><a href="/logout" class="btn-logout">Đăng xuất</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <a href="#" class="bk-btn">Đặt phòng ngay!</a>
+        </div>
+        <nav class="mainmenu mobile-menu">
+            <ul>
+                <li class="active"><a href="/">Trang chủ</a></li>
+                <li><a th:href="@{/rooms}">Tất cả phòng</a></li>
+                <li><a th:href="@{/about-us}">Về chúng tôi</a></li>
+                <li><a href="#">Danh mục</a>
+                    <ul class="dropdown category-list">
+
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <div id="mobile-menu-wrap"></div>
+        <div class="top-social">
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-instagram"></i></a>
+        </div>
+        <ul class="top-widget">
+            <li><i class="fa fa-phone"></i>+84 987 654 321</li>
+            <li><i class="fa fa-envelope"></i> hotelking@gmail.com</li>
+        </ul>
+    </div>
+    <header class="header-section">
+        <div class="top-nav">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <ul class="tn-left">
+                            <li><i class="fa fa-phone"></i>+84 987 654 321</li>
+                            <li><i class="fa fa-envelope"></i> hotelking@gmail.com</li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="tn-right">
+                            <div class="top-social">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                            </div>
+                            <a href="#" class="bk-btn">Đặt phòng ngay!</a>
+                            <div class="language-option">
+                                <!-- Khi người dùng chưa đăng nhập -->
+                                <div class="user-not-login">
+                                    <i class="fa fa-user"></i>
+                                    <span class="customer-name"><i class="fa fa-angle-down"></i></span>
+                                    <div class="flag-dropdown">
+                                        <ul>
+                                            <li class="mb-3"><a href="/login-form">Đăng nhập</a></li>
+                                            <li><a href="/signup-form">Đăng ký</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- Khi người dùng đã đăng nhập -->
+                                <div class="user-login d-none">
+                                    <i class="fa fa-user"></i>
+                                    <span class="customer-name"><span class="user-name"></span> <i
+                                            class="fa fa-angle-down"></i></span>
+                                    <div class="flag-dropdown">
+                                        <ul>
+                                            <li class="mb-3"><a href="/profile">Trang cá nhân</a></li>
+                                            <li><a href="/logout" class="btn-logout">Đăng xuất</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="menu-item">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="logo">
+                            <a href="/">
+                                <h4 class="">HotelKing</h4>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-10">
+                        <div class="nav-menu">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center gap-1 w-50">
+                                    <input type="text" class="form-control" placeholder="Tìm kiếm địa điểm muốn đặt phòng?">
+                                    <button class="hotelking-btn"><i class="fa fa-search"></i></button>
+                                </div>
+                                <nav class="mainmenu">
+                                    <ul>
+                                        <li class="active"><a href="/">Trang chủ</a></li>
+                                        <li><a th:href="@{/rooms}">Tất cả phòng</a></li>
+                                        <li><a href="#">Danh mục</a>
+                                            <ul class="dropdown category-list">
+                                            </ul>
+                                        </li>
+                                        <li><a th:href="@{/about-us}">Về chúng tôi</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+</div>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Sona Template">
+    <meta name="keywords" content="Sona, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Đặt phòng | HotelKing</title>
+    <div th:insert="~{components/taglib :: taglib}"></div>
+    <link rel="stylesheet" href="/css/checkout.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/css/flaticon.css" type="text/css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+<div th:insert="~{components/header :: header}"></div>
+
+<div class="container mt-4 mb-3">
+    <div class="row">
+        <div class="col-md-4">
+            <div id="checkout-room-detail"></div>
+        </div>
+        <div class="col-md-8">
+            <div class="">
+                <h5>Thông tin khách hàng</h5>
+                <form class="mt-3">
+                    <div class="mb-3">
+                        <label for="fullName" class="form-label">Họ và tên</label>
+                        <input type="text" class="form-control rounded-0" id="fullName" placeholder="Nhập họ và tên">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control rounded-0" id="email" placeholder="Nhập email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Số điện thoại</label>
+                        <input type="tel" class="form-control rounded-0" id="phone" placeholder="Nhập số điện thoại">
+                    </div>
+                    <div class="mb-3">
+                        <label for="checkInDate" class="form-label">Ngày nhận phòng</label>
+                        <input type="date" class="form-control rounded-0" id="checkInDate">
+                    </div>
+                    <div class="mb-3">
+                        <label for="checkOutDate" class="form-label">Ngày trả phòng</label>
+                        <input type="date" class="form-control rounded-0" id="checkOutDate">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3 ">
+        <div class="col-md-6">
+            <h5 class="mb-4">Thông tin hoá đơn</h5>
+            <ul class="list-group rounded-0">
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                    <h6 class="my-0">Phòng</h6>
+                    <span class="text-muted count-item">$0</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                    <h6 class="my-0">Người lớn <span class="adult">1</span> | Trẻ em <span class="children">1</span>
+                    </h6>
+                    <span class="text-muted amount">$0</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                    <h6 class="my-0">Tổng tiền</h6>
+                    <span class="text-muted amount">$0</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Tổng thanh toán (VND)</span>
+                    <strong class="total-price">$0</strong>
+                </li>
+                <div class="d-none">
+                    <input type="number" class="total-payment" id="amount"
+                           name="amount">
+                    <input type="text" class="form-control-plaintext text-end" id="orderInfo"
+                           name="orderInfo"
+                           required value="Thanh toan don hang mat kinh">
+                </div>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h5 class="mb-4">Phương thức thanh toán</h5>
+            <form action="/submit-payment-method" method="POST">
+                <div class="form-check d-flex justify-content-between mb-3">
+                    <div>
+                        <input class="form-check-input" type="radio" name="paymentMethod" id="vnpay" checked
+                               value="vnpay">
+                        <label class="form-check-label" for="vnpay">
+                            VNPay
+                        </label>
+                    </div>
+                    <div>
+                        <img src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Icon-VNPAY-QR.png"
+                             width="28px" height="24px" alt="VNPAY-LOGO"/>
+                    </div>
+                </div>
+                <div class="form-check d-flex justify-content-between">
+                    <div>
+                        <input class="form-check-input" type="radio" name="paymentMethod" id="cod"
+                               value="cod">
+                        <label class="form-check-label" for="cod">
+                            Thanh toán tại nơi checkin
+                            <i class="fa fa-info-circle ml-2" data-bs-toggle="tooltip" data-bs-placement="top"
+                               title="Bạn phải login trước để có thể sử dụng phương thức này"
+                               aria-hidden="true"></i>
+                        </label>
+                    </div>
+                    <div>
+                        <img src="https://cdn-icons-png.flaticon.com/512/1668/1668966.png" alt=""
+                             style="width: 28px; height: 24px">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--    <div class="col-md-6 ">-->
+    <!--        <label for="promoCode" class="fw-bold mb-2">Nhập mã khuyến mãi:</label>-->
+    <!--        <div class="d-flex align-items-center gap-2 mb-1">-->
+    <!--            <input type="text" class="form-control form-control-sm w-50 rounded-0" id="promoCode"-->
+    <!--                   name="promoCode">-->
+    <!--            <button type="button" class="btn btn-dark rounded-0 btn-sm" id="btn-acp-promo">Dùng mã</button>-->
+    <!--        </div>-->
+    <!--        <span id="promoStatus"></span>-->
+    <!--    </div>-->
+    <button type="submit" class="btn btn-dark float-end rounded-0 w-100 mt-3 btn-payment hotelking-btn"
+            id="paymentButton">Tiến hành thanh
+        toán
+    </button>
+</div>
+
+
+<div th:insert="~{components/footer :: footer}"></div>
+
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/jquery.nice-select.min.js"></script>
+<script src="/js/jquery-ui.min.js"></script>
+<script src="/js/jquery.slicknav.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/checkout/checkout.js"></script>
+</body>
+</html>
